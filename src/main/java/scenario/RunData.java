@@ -67,7 +67,7 @@ public class RunData {
 		File inputPath = new File(args[0]);
 		List<String> columns = Arrays.asList(args[1].split(","));
 		double fraction = Double.parseDouble(args[2]);
-		int sampleSize = Integer.parseInt(args[3]);
+		double relativeSampleSize = Double.parseDouble(args[3]);
 		String samplerName = args[4];
 		
 		Random random = new Random(0);
@@ -82,7 +82,7 @@ public class RunData {
 		INDArray reducedCounts = new CountsGenerator().getCounts(reducedData, data);
 		
 		Sampler sampler = null;
-		sampleSize = data.size() * sampleSize;
+		int sampleSize = (int) (data.size() * relativeSampleSize);
 		
 		switch (samplerName) {
 		case "ipf":
