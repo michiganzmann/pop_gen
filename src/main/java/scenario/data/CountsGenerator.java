@@ -22,6 +22,10 @@ public class CountsGenerator {
 			}
 		}
 		
+		for (int i = 0; i < numberOfDimensions; i++) {
+				numberOfCategories[i]++;
+			}
+		
 		INDArray counts = Nd4j.zeros(numberOfCategories);
 		
 		for (List<Integer> row : data) {
@@ -29,10 +33,16 @@ public class CountsGenerator {
 			int[] readIndex = new int[numberOfDimensions];
 			
 			for (int i = 0; i < numberOfDimensions; i++) {
-				writeIndex[i] = NDArrayIndex.point(row.get(i));
-				readIndex[i] = row.get(i);
+				int value = row.get(i);
+				if (value > 0) {
+					writeIndex[i] = NDArrayIndex.point(value);
+					readIndex[i] = value;
+				}
+				else {
+					writeIndex[i] = NDArrayIndex.point(numberOfCategories[i]-1);
+					readIndex[i] = numberOfCategories[i]-1;
+				}
 			}
-			
 			counts.put(writeIndex, counts.getDouble(readIndex) + 1.0);
 		}
 		

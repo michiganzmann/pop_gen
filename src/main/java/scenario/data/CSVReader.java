@@ -26,7 +26,6 @@ public class CSVReader {
 		String line = null;
 		List<String> header = null;
 		List<String> row = null;
-		
 		List<List<Integer>> data = new LinkedList<>();
 		
 		while ((line = reader.readLine()) != null) {
@@ -38,6 +37,7 @@ public class CSVReader {
 				List<Integer> dataRow = new ArrayList<>(columns.size());
 				
 				for (String column : columns) {
+					// the string itself is with quotation marks, this is to add in the next code line
 					dataRow.add(Integer.parseInt(row.get(header.indexOf(column))));
 				}
 				

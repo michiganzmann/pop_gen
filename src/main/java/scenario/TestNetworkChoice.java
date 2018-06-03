@@ -19,19 +19,27 @@ import scenario.data.CountsGenerator;
 
 public class TestNetworkChoice {
 	static public void main(String[] args) throws IOException {
-		List<List<Integer>> data = new CSVReader(";").load(new File("../data/alter_gesl.csv"),
-				Arrays.asList("alter", "gesl"));
+		// CSV is sorted by kommas ","
+		List<List<Integer>> data = new CSVReader(",").load(new File("data/haushaltData.csv"),
+				Arrays.asList("f30100","f32200a","F20601","hhgr","minAlter","maxAlter"));
+		// 0: Autos, 1: Velos, 2: Haushaltseinkommen, 3: Haushaltsgrösse, 4: minAlter, 5: maxAlter
+		System.out.println("done CSV");
 		Collections.shuffle(data);
-		
-		List<List<Integer>> reducedData = data.subList(0, 1000);
+		List<List<Integer>> reducedData = data.subList(0, 4000);
+		System.out.println("done reduced Data");
 
 		INDArray counts = new CountsGenerator().getCounts(data);
+		System.out.println("done counts");
 		INDArray reducedCounts = new CountsGenerator().getCounts(reducedData, data);
+		System.out.println("done reducedCounts");
 
 		Random random = new Random(0);
 		BNGraphGenerator graphGenerator = new BNGraphGenerator(random);
+		System.out.println("done graphGenerator");
 		
 		BNGraphFinder graphFinder = new BNGraphFinder(graphGenerator, reducedCounts, reducedData, random);
-		BNGraph graph = graphFinder.findGraph(100);
+		System.out.println("done GraphFinder");
+		BNGraph graph = graphFinder.findGraph(500);
+		System.out.println("done Graph");
 	}
 }

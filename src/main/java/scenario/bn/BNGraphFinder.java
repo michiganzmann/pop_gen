@@ -22,6 +22,7 @@ public class BNGraphFinder {
 		BNGraph bestGraph = null;
 		double bestScore = Double.NEGATIVE_INFINITY;
 		
+		int messageIter = 0;
 		for (int i = 0; i < numberOfIterations; i++) {
 			BNGraph graph = generator.generate(data.get(0).size());
 
@@ -37,6 +38,12 @@ public class BNGraphFinder {
 				
 				System.out.println("AIC: " + score + ", Graph: " + bestGraph);
 			}
+			
+			if (messageIter == 25) {
+				System.out.println("Iteration: " + i);
+				messageIter = 0;
+			}
+			messageIter++;
 		}
 		
 		return bestGraph;	
